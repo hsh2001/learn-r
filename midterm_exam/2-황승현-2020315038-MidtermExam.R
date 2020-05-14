@@ -14,7 +14,7 @@ read_data <- read.csv(
 
 # 변수 이름을 사용하기 쉽게 바꾸기
 electricity_usage <- data.frame(
-  month = read_data$월별,
+  month = read_data$"월별",
   usage2017 = read_data$"X2017년.전력사용량.kWh",
   usage2018 = read_data$"X2018년.전력사용량.kWh",
   usage_increase = read_data$"전년대비증감...",
@@ -45,7 +45,7 @@ str(electricity_usage)
 
 ## 2. 전기 사용량이 어떻게 변하고 있을까?
 
-## 전년 대비 증감의 평균은 어떻까?
+## 전년 대비 사용량 증감의 평균은 어떻까?
 mean(electricity_usage$usage_increase) # -3.4275
 
 ## 증감의 평균이 0보다 작다면 전년보다 전기를 덜 사용했다는 뜻일까?
@@ -89,3 +89,26 @@ elec_usage_month <- bind_rows(usage2017, usage2018)
 
 # 그래프 그리기
 qplot(data = elec_usage_month, x = month, y = usage)
+
+## 6. 전기 사용량 변화를 표기하기
+## 전기 사용량이 전년과 같다면 same, 올랐다면 increase, 내려갔다면 decrease
+electricity_usage$compare <- ifelse(
+  electricity_usage$usage_increase == 0, 
+  'same', 
+  ifelse(
+    electricity_usage$usage_increase > 0, 
+    'increase', 
+    'decrease'
+  )
+)
+
+table(electricity_usage$compare)
+# decrease increase 
+# 10        2
+# 이를 통해 전기 사용량은 대체로 감소하고 있음을 알 수 있다.
+
+## 7. 전기를 많이 사용한 달 5달, 적게 사용한 달 5달 출력하기
+arrange_usage <- elec_usage_month %>% arrange(desc(usage)) %>% select(month)
+
+arrange_usage %>% head(5) ## 많이 사용한 5달
+arrange_usage %>% tail(5) ## 적게 사용한 5달 
