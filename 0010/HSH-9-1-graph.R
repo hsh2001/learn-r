@@ -1,13 +1,6 @@
-install.packages("foreign")  # foreign 패키지 설치
-library(foreign)
 library(readxl)
 library(ggplot2)
 library(dplyr)
-
-#raw_welfare <- read.spss(
-#  file = "Koweps_hpc10_2015_beta1.sav",
-#  to.data.frame = T
-#)
 
 mpg <- as.data.frame(ggplot2::mpg)
 midwest <- as.data.frame(ggplot2::midwest)
