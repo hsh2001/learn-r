@@ -1,5 +1,3 @@
-install.packages('foreign')
-
 library(foreign)
 library(readxl)
 library(ggplot2)
