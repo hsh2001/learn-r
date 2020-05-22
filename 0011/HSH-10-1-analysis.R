@@ -1,7 +1,11 @@
+library(extrafont) 
 library(foreign)
 library(readxl)
 library(ggplot2)
 library(dplyr)
+
+font_import()
+theme_set(theme_grey(base_family='D2Coding'))
 
 raw_welfare <- read.spss(
   file = "0010/data/Koweps_hpc10_2015_beta1.sav",
